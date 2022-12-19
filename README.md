@@ -71,7 +71,7 @@ Pedro Paulo Fagundes Cabral
 
 Email: preedroos@gmail.com
 
-Project Link: [Alura Books](https://github.com/Preedros/alura-mochila-de-viagem)
+Project Link: [Alura Mochila de Viagem](https://github.com/Preedros/alura-mochila-de-viagem)
 
 <p align="right">[ <a href="#readme-top">back to top</a> ]</p>
 
