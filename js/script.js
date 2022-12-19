@@ -6,13 +6,11 @@ const bag =
 
 const list = document.querySelector('.lista');
 
-//Update DOM
 updateDOM();
 
 // Listen form submit
 document.querySelector('.adicionar').addEventListener('submit', submit);
 
-// Insert an item when form submitted
 function submit(event) {
   event.preventDefault();
 
@@ -30,9 +28,7 @@ function submit(event) {
     update(bag[index], item.amount);
   }
 
-  // Update localStorage
-  localStorage.setItem('bag', JSON.stringify(bag));
-
+  updateLocalStorage();
   updateDOM();
 }
 
@@ -45,12 +41,18 @@ function isInBag(item) {
 
 // Push item to bag
 function insert(item) {
+  item.id = bag.length ? bag[bag.length - 1].id + 1 : 0;
   bag.push(item);
 }
 
 // Update item in bag
 function update(item, amount) {
   item.amount = amount;
+}
+
+// Update localStorage
+function updateLocalStorage() {
+  localStorage.setItem('bag', JSON.stringify(bag));
 }
 
 // Update DOM
@@ -61,11 +63,15 @@ function updateDOM() {
     // Create list item
     const li = document.createElement('li');
     const strong = document.createElement('strong');
+    const button = document.createElement('button');
 
     // Add data into list item
     strong.textContent = item.amount;
-    li.innerHTML = strong.outerHTML + item.name;
+    button.textContent = '-';
+    button.classList.add('delete');
+    li.innerHTML = strong.outerHTML + item.name + button.outerHTML;
     li.classList.add('item');
+    li.id = item.id;
 
     // Push list item to div
     div.appendChild(li);
@@ -73,4 +79,17 @@ function updateDOM() {
 
   // Insert div into DOM
   list.innerHTML = div.outerHTML;
+
+  document.querySelectorAll('.delete').forEach(item => {
+    item.addEventListener('click', remove);
+  });
+}
+
+function remove(event) {
+  console.log(event);
+  const idItem = event.target.parentNode.id;
+  const index = bag.findIndex(item => item.id == idItem);
+  bag.splice(index, 1);
+  updateLocalStorage();
+  updateDOM();
 }
